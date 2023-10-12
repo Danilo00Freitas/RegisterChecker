@@ -1,6 +1,5 @@
 package Backend.FatorConnect;
 
-import Frontend.ProgressionScreen;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -20,7 +19,7 @@ public class    FatorConnect {
     public FatorConnect(VerifyCnpjRegisterFatorconnet verifyCnpjRegisterFatorconnet){
         this.verifyCnpjRegisterFatorconnet = new VerifyCnpjRegisterFatorconnet();
     }
-public void verifyFatorConnect(String pathname, ProgressionScreen progressionScreen){
+public void verifyFatorConnect(String pathname, ){
     try {
         FileInputStream fileInputStream = new FileInputStream(new File(pathname));
         Workbook workbook = new XSSFWorkbook(fileInputStream);
@@ -33,8 +32,6 @@ public void verifyFatorConnect(String pathname, ProgressionScreen progressionScr
         this.totalInterations = totalRows;
 
         JOptionPane.showMessageDialog(null, "Foram encontrados " + validRowsCount + " CNPJs.", "Encerrado", JOptionPane.INFORMATION_MESSAGE);
-
-        progressionScreen.updateProgress(0);
 
         for (int i = 0; i < totalRows; i++) {
             Row row = sheet.getRow(i);
@@ -69,9 +66,7 @@ public void verifyFatorConnect(String pathname, ProgressionScreen progressionScr
             }
 
             //Painel de progressão
-            actualIteration ++;
-            progressionScreen.setTotalIterations(totalRows); // Defina o valor de totalIterations
-            progressionScreen.updateProgress(actualIteration);
+
         }
 
         FileOutputStream outputStream = new FileOutputStream(new File(pathname));

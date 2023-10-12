@@ -76,12 +76,8 @@ public class MainScreen extends JFrame {
                     VerifyCnpjRegisterFatorconnet verifyCnpjRegisterFatorconnet = new VerifyCnpjRegisterFatorconnet();
                     FatorConnect fatorConnect = new FatorConnect(verifyCnpjRegisterFatorconnet);
 
-                    ProgressionScreen progressionScreen = new ProgressionScreen(fatorConnect);
-                    progressionScreen.showProgressionScreen();
+                    fatorConnect.verifyFatorConnect(filePath);
 
-                    fatorConnect.verifyFatorConnect(filePath,progressionScreen);
-
-                    progressionScreen.closeProgressionScreen();
                     JOptionPane.showMessageDialog(null, "Execução encerrada", "Encerrado", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
