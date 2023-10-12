@@ -16,9 +16,11 @@ public class VerifyCnpjRegisterFatorconnet {
 
     public VerifyCnpjRegisterFatorconnet() {
         String currentDirectory = System.getProperty("user.dir");
-        /*String programFolder = "ReigisterChecker";*/
-        /*String programPath = currentDirectory + File.separator + programFolder;*/
-        this.chromedriverPath = currentDirectory + File.separator + "chrome114/opt/google/chrome/chromedriver";
+
+
+        /*this.chromedriverPath = currentDirectory + File.separator + "chrome/chromedriver.exe";*/ //windows
+        this.chromedriverPath = currentDirectory + File.separator + "chrome/chromedriver"; //linux
+
     }
     public Boolean verifyCnpj(String cnpj) {
         System.setProperty("webdriver.chrome.driver",chromedriverPath);

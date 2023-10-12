@@ -75,10 +75,14 @@ public class MainScreen extends JFrame {
                 if (selectedCorretora.equals("FatorConnect")){
                     VerifyCnpjRegisterFatorconnet verifyCnpjRegisterFatorconnet = new VerifyCnpjRegisterFatorconnet();
                     FatorConnect fatorConnect = new FatorConnect(verifyCnpjRegisterFatorconnet);
-                    fatorConnect.verifyFatorConnect(filePath);
+
+                    ProgressionScreen progressionScreen = new ProgressionScreen(fatorConnect);
+                    progressionScreen.showProgressionScreen();
+
+                    fatorConnect.verifyFatorConnect(filePath,progressionScreen);
+
+                    progressionScreen.closeProgressionScreen();
                     JOptionPane.showMessageDialog(null, "Execução encerrada", "Encerrado", JOptionPane.INFORMATION_MESSAGE);
-
-
                 }
             }
         });
