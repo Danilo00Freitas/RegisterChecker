@@ -26,6 +26,7 @@ public class VerifyCnpjRegisterFatorconnet {
         System.setProperty("webdriver.chrome.driver",chromedriverPath);
 
         ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless");
 
         this.driver = new ChromeDriver(chromeOptions);
 

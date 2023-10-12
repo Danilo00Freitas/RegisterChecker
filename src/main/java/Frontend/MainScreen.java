@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.SwingWorker;
+
 
 public class MainScreen extends JFrame {
     private JPanel mainPanel = new JPanel();
@@ -67,18 +69,29 @@ public class MainScreen extends JFrame {
         iniciarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
                 var selectedCorretora = selectCorretora.getSelectedItem();
                 var filePath = fileChooser.getSelectedFile().getPath();
                 System.out.println(selectedCorretora);
 
-                if (selectedCorretora.equals("FatorConnect")){
+                if (selectedCorretora.equals("FatorConnect")) {
                     VerifyCnpjRegisterFatorconnet verifyCnpjRegisterFatorconnet = new VerifyCnpjRegisterFatorconnet();
                     FatorConnect fatorConnect = new FatorConnect(verifyCnpjRegisterFatorconnet);
 
-                    fatorConnect.verifyFatorConnect(filePath);
+                    // Crie um SwingWorker para executar o processo em segundo plano
+                    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                        @Override
+                        protected Void doInBackground() throws Exception {
+                            fatorConnect.verifyFatorConnect(filePath);
+                            return null;
+                        }
+                        @Override
+                        protected void done() {
+                            // O código aqui é executado quando o processo em segundo plano é concluído
+                            JOptionPane.showMessageDialog(null, "Execução encerrada", "Encerrado", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    };
 
-                    JOptionPane.showMessageDialog(null, "Execução encerrada", "Encerrado", JOptionPane.INFORMATION_MESSAGE);
+                    worker.execute(); // Inicie o SwingWorker
                 }
             }
         });

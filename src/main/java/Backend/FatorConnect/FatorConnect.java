@@ -19,7 +19,7 @@ public class    FatorConnect {
     public FatorConnect(VerifyCnpjRegisterFatorconnet verifyCnpjRegisterFatorconnet){
         this.verifyCnpjRegisterFatorconnet = new VerifyCnpjRegisterFatorconnet();
     }
-public void verifyFatorConnect(String pathname, ){
+public void verifyFatorConnect(String pathname){
     try {
         FileInputStream fileInputStream = new FileInputStream(new File(pathname));
         Workbook workbook = new XSSFWorkbook(fileInputStream);
