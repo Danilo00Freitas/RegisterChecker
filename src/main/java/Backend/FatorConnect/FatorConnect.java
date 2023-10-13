@@ -1,5 +1,6 @@
 package Backend.FatorConnect;
 
+import Frontend.ProgressBarScreen;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -12,14 +13,15 @@ import java.io.IOException;
 public class    FatorConnect {
     private VerifyCnpjRegisterFatorconnet verifyCnpjRegisterFatorconnet;
     private TableEnviromentConfig tableEnviromentConfig;
+    private int totalRows;
 
-    private int totalInterations = 0;
-    private int actualIteration = 0;
+
+
 
     public FatorConnect(VerifyCnpjRegisterFatorconnet verifyCnpjRegisterFatorconnet){
         this.verifyCnpjRegisterFatorconnet = new VerifyCnpjRegisterFatorconnet();
     }
-public void verifyFatorConnect(String pathname){
+public void verifyFatorConnect(String pathname, ProgressBarScreen progressBarScreen){
     try {
         FileInputStream fileInputStream = new FileInputStream(new File(pathname));
         Workbook workbook = new XSSFWorkbook(fileInputStream);
@@ -28,8 +30,8 @@ public void verifyFatorConnect(String pathname){
         tableEnviromentConfig = new TableEnviromentConfig(sheet);
         int validRowsCount = tableEnviromentConfig.getRealNumberOfRows();
         int invalidRowsCount = tableEnviromentConfig.getEmptyRowsBeforeStart();
-        int totalRows = validRowsCount + invalidRowsCount;
-        this.totalInterations = totalRows;
+        this.totalRows = validRowsCount + invalidRowsCount;
+        progressBarScreen.setMax(totalRows);
 
         JOptionPane.showMessageDialog(null, "Foram encontrados " + validRowsCount + " CNPJs.", "Encerrado", JOptionPane.INFORMATION_MESSAGE);
 
@@ -66,6 +68,7 @@ public void verifyFatorConnect(String pathname){
             }
 
             //Painel de progressão
+            progressBarScreen.updateProgress(i);
 
         }
 
@@ -78,10 +81,8 @@ public void verifyFatorConnect(String pathname){
         e.printStackTrace();
     }
 }
-public int getTotalInterations(){
-        return totalInterations;
+public int getTotalRow(){
+        return totalRows;
 }
-public int getActualIteration() {
-        return actualIteration;
-    }
+
 }

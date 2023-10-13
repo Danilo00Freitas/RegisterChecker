@@ -76,18 +76,21 @@ public class MainScreen extends JFrame {
                 if (selectedCorretora.equals("FatorConnect")) {
                     VerifyCnpjRegisterFatorconnet verifyCnpjRegisterFatorconnet = new VerifyCnpjRegisterFatorconnet();
                     FatorConnect fatorConnect = new FatorConnect(verifyCnpjRegisterFatorconnet);
+                    ProgressBarScreen progressBarScreen = new ProgressBarScreen();
+                    progressBarScreen.setVisible(true);
 
                     // Crie um SwingWorker para executar o processo em segundo plano
                     SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
                         @Override
                         protected Void doInBackground() throws Exception {
-                            fatorConnect.verifyFatorConnect(filePath);
+                            fatorConnect.verifyFatorConnect(filePath,progressBarScreen);
                             return null;
                         }
                         @Override
                         protected void done() {
                             // O código aqui é executado quando o processo em segundo plano é concluído
                             JOptionPane.showMessageDialog(null, "Execução encerrada", "Encerrado", JOptionPane.INFORMATION_MESSAGE);
+                            progressBarScreen.setVisible(false);
                         }
                     };
 
