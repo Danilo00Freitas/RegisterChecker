@@ -16,23 +16,17 @@ public class VerifyCnpjRegisterFatorconnet {
 
     public VerifyCnpjRegisterFatorconnet() {
         String currentDirectory = System.getProperty("user.dir");
-
-
-        /*this.chromedriverPath = currentDirectory + File.separator + "chrome/chromedriver.exe";*/ //windows
-        this.chromedriverPath = currentDirectory + File.separator + "chrome/chromedriver"; //linux
-
-    }
-    public Boolean verifyCnpj(String cnpj) {
+        this.chromedriverPath = currentDirectory + File.separator + "chrome/chromedriver.exe"; //windows
+        /*this.chromedriverPath = currentDirectory + File.separator + "chrome/chromedriver"; *///linux
         System.setProperty("webdriver.chrome.driver",chromedriverPath);
-
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--headless");
-
         this.driver = new ChromeDriver(chromeOptions);
+    }
+    public Boolean verifyCnpj(String cnpj) {
 
         try{
             driver.get("https://canaldigital.fatorconnect.com.br/cadastro/validar-dados");
-
             //Iniciando operação
             WebDriverWait wait = new WebDriverWait(driver, 2);
             Actions builder = new Actions(driver);
@@ -49,15 +43,15 @@ public class VerifyCnpjRegisterFatorconnet {
 
             try {
                 WebElement elemento1 = wait.until(ExpectedConditions.presenceOfElementLocated(selector1));
-                driver.close();
+                driver.navigate().refresh();
                 return true;
             } catch (Exception e) {
                 try {
                     WebElement elemento2 = wait.until(ExpectedConditions.presenceOfElementLocated(selector2));
-                    driver.close();
+                    driver.navigate().refresh();
                     return true;
                 } catch (Exception exception) {
-                    driver.close();
+                    driver.navigate().refresh();
                     return false;
                 }
             }
@@ -65,5 +59,9 @@ public class VerifyCnpjRegisterFatorconnet {
             System.out.println(e);
             return false;
         }
+    }
+
+    public void closeChromeDriver(){
+        driver.close();
     }
 }

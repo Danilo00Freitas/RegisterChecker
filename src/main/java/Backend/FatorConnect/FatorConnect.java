@@ -15,9 +15,6 @@ public class    FatorConnect {
     private TableEnviromentConfig tableEnviromentConfig;
     private int totalRows;
 
-
-
-
     public FatorConnect(VerifyCnpjRegisterFatorconnet verifyCnpjRegisterFatorconnet){
         this.verifyCnpjRegisterFatorconnet = new VerifyCnpjRegisterFatorconnet();
     }
@@ -47,7 +44,6 @@ public void verifyFatorConnect(String pathname, ProgressBarScreen progressBarScr
 
                 if (cnpjCell != null && cnpjCell.getCellType() != CellType.BLANK &&
                         !cnpj.isEmpty() && !cnpj.equals("CNPJ")) {
-
                     Boolean verification = verifyCnpjRegisterFatorconnet.verifyCnpj(cnpj);
                     if (verification){
                         Cell resultCell = row.createCell(10);
@@ -73,8 +69,10 @@ public void verifyFatorConnect(String pathname, ProgressBarScreen progressBarScr
         }
 
         FileOutputStream outputStream = new FileOutputStream(new File(pathname));
+        verifyCnpjRegisterFatorconnet.closeChromeDriver();
         workbook.write(outputStream);
         outputStream.close();
+        fileInputStream.close();
         workbook.close();
 
     } catch (IOException e) {
